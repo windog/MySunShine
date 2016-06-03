@@ -72,6 +72,9 @@ public class ForecastFragment extends Fragment {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
+        /*  void...params 相当于 void[] params 传了个void类型数组进去
+            void 其实相当于占位符了，没有特别意义
+        * */
         @Override
         protected Void doInBackground(Void... params) {
             // These two need to be declared outside the try/catch

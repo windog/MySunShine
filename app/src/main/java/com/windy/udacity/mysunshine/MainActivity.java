@@ -2,6 +2,7 @@ package com.windy.udacity.mysunshine;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 
 
@@ -17,7 +18,7 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
         }
 
-/*        // 动态添加 Fragment 进来 , 这种简单写法
+       /* // 动态添加 Fragment 进来 , 这种简单写法
         Fragment mainFragment = new ForecastFragment();
         // 这种简洁写法 ，可以常用
         getSupportFragmentManager().
@@ -26,12 +27,12 @@ public class MainActivity extends ActionBarActivity {
                 commit();*/
   }
 
- /*   @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -41,9 +42,9 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-    /*    if (id == R.id.action_settings) {
+        if (id == R.id.action_settings) {
             return true;
-        }*/
+        }
 
         return super.onOptionsItemSelected(item);
     }
