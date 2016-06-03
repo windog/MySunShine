@@ -17,15 +17,7 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new ForecastFragment())
                     .commit();
         }
-
-       /* // 动态添加 Fragment 进来 , 这种简单写法
-        Fragment mainFragment = new ForecastFragment();
-        // 这种简洁写法 ，可以常用
-        getSupportFragmentManager().
-                beginTransaction().
-                add(R.id.container, mainFragment).
-                commit();*/
-  }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,5 +40,4 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }
