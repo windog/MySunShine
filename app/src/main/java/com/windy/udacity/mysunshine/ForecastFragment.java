@@ -62,7 +62,7 @@ public class ForecastFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
             // call AsyncTask
-            new FetchWeatherTask().execute();
+            new FetchWeatherTask().execute("beijing");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -140,12 +140,12 @@ public class ForecastFragment extends Fragment {
                 // buildUpon 在。。。基础上构建
                 Uri builtUri = Uri.parse(baseUrl).buildUpon()
                         .appendQueryParameter(QUERY_PARAM , cityName)
-                        .appendQueryParameter(APPID_PARAM , BuildConfig.APPLICATION_ID)
+                        .appendQueryParameter(APPID_PARAM , BuildConfig.OPEN_WEATHER_MAP_API_KEY)
                         .build();
 
                 URL url = new URL(builtUri.toString());
 
-                Log.d(LOG_TAG, "Built URI " + builtUri.toString());
+                Log.d(LOG_TAG, "Built URI is :" + builtUri.toString());
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
