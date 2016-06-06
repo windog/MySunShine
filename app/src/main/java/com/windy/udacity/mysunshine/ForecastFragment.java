@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -108,8 +110,7 @@ public class ForecastFragment extends Fragment {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
-        /*  void...params 相当于 void[] params 传了个void类型数组进去
-            void 其实相当于占位符了，没有特别意义
+        /*  String... params 相当于 String[] params 传了个 String 类型数组进去
         * */
         @Override
         protected Void doInBackground(String... params) {
@@ -144,7 +145,7 @@ public class ForecastFragment extends Fragment {
                         .build();
 
                 URL url = new URL(builtUri.toString());
-
+                // print integrated URL
                 Log.d(LOG_TAG, "Built URI is :" + builtUri.toString());
 
                 // Create the request to OpenWeatherMap, and open the connection
@@ -175,6 +176,17 @@ public class ForecastFragment extends Fragment {
                 }
                 forecastJsonStr = buffer.toString();
                 Log.d(LOG_TAG , ""+forecastJsonStr);
+
+                // Gson解析
+                Gson gson = new Gson();
+                WeatherInfo weatherInfo = gson.fromJson(forecastJsonStr,WeatherInfo.class);
+                List<WeatherInfo.ListBean> list = weatherInfo.getList();
+
+                Log.d(LOG_TAG, weatherInfo.getCity().getName());
+                for (WeatherInfo.ListBean bean:list){
+                    Log.d(LOG_TAG, "" + bean.getTemp().getMax());
+                }
+
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
                 // If the code didn't successfully get the weather data, there's no point in attemping
