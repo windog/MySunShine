@@ -29,6 +29,7 @@ import java.util.List;
 /**
  * Created by windog on 2016/6/1.
  */
+
 /**
  * Encapsulates fetching the forecast and displaying it as a {@link ListView} layout.
  */
@@ -65,6 +66,7 @@ public class ForecastFragment extends Fragment {
         if (id == R.id.action_refresh) {
             // call AsyncTask
             new FetchWeatherTask().execute("beijing");
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -106,14 +108,45 @@ public class ForecastFragment extends Fragment {
     }
 
 
-    public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
+    public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
+
+
+        private String formatHighLows(double high, double low) {
+            // For presentation, assume the user doesn't care about tenths of a degree.
+            long roundedHigh = Math.round(high);
+            long roundedLow = Math.round(low);
+            String highLowStr = roundedHigh + "/" + roundedLow;
+            return highLowStr;
+        }
+
+        public String[] getWeatherDataFromJson(String forecastJsonStr) {
+
+            // 固定一周的数组
+            String[] resultsStrs = new String[7];
+            // 日期
+            String day;
+            // 天气描述
+            String description;
+            // 最高温与最低温拼接字符
+            String highAndLow;
+            // Gson解析
+            Gson gson = new Gson();
+            WeatherInfo weatherInfo = gson.fromJson(forecastJsonStr, WeatherInfo.class);
+            List<WeatherInfo.ListBean> list = weatherInfo.getList();
+
+            Log.d(LOG_TAG, weatherInfo.getCity().getName());
+            for (WeatherInfo.ListBean bean : list) {
+                Log.d(LOG_TAG, "Max is " + bean.getTemp().getMax());
+            }
+            return null;
+        }
 
         /*  String... params 相当于 String[] params 传了个 String 类型数组进去
         * */
         @Override
-        protected Void doInBackground(String... params) {
+        protected String[] doInBackground(String... params) {
             // 判断传入的参数数组是否为空
             if (params.length == 0) {
                 return null;
@@ -140,8 +173,8 @@ public class ForecastFragment extends Fragment {
 
                 // buildUpon 在。。。基础上构建
                 Uri builtUri = Uri.parse(baseUrl).buildUpon()
-                        .appendQueryParameter(QUERY_PARAM , cityName)
-                        .appendQueryParameter(APPID_PARAM , BuildConfig.OPEN_WEATHER_MAP_API_KEY)
+                        .appendQueryParameter(QUERY_PARAM, cityName)
+                        .appendQueryParameter(APPID_PARAM, BuildConfig.OPEN_WEATHER_MAP_API_KEY)
                         .build();
 
                 URL url = new URL(builtUri.toString());
@@ -175,17 +208,8 @@ public class ForecastFragment extends Fragment {
                     return null;
                 }
                 forecastJsonStr = buffer.toString();
-                Log.d(LOG_TAG , ""+forecastJsonStr);
+                Log.d(LOG_TAG, "Returned string from OPEN_WEATHER: " + forecastJsonStr);
 
-                // Gson解析
-                Gson gson = new Gson();
-                WeatherInfo weatherInfo = gson.fromJson(forecastJsonStr,WeatherInfo.class);
-                List<WeatherInfo.ListBean> list = weatherInfo.getList();
-
-                Log.d(LOG_TAG, weatherInfo.getCity().getName());
-                for (WeatherInfo.ListBean bean:list){
-                    Log.d(LOG_TAG, "" + bean.getTemp().getMax());
-                }
 
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
@@ -204,6 +228,15 @@ public class ForecastFragment extends Fragment {
                     }
                 }
             }
+
+            try {
+                return getWeatherDataFromJson(forecastJsonStr);
+            } catch (Exception e) {
+                Log.e(LOG_TAG, e.getMessage(), e);
+                e.printStackTrace();
+            }
+
+            // This will only happen if there was an error getting or parsing the forecast.
             return null;
         }
     }
