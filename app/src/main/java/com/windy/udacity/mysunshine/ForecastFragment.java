@@ -22,8 +22,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -125,22 +128,39 @@ public class ForecastFragment extends Fragment {
 
             // 固定一周的数组
             String[] resultsStrs = new String[7];
-            // 日期
-            String day;
-            // 天气描述
-            String description;
-            // 最高温与最低温拼接字符
-            String highAndLow;
             // Gson解析
             Gson gson = new Gson();
             WeatherInfo weatherInfo = gson.fromJson(forecastJsonStr, WeatherInfo.class);
             List<WeatherInfo.ListBean> list = weatherInfo.getList();
 
-            Log.d(LOG_TAG, weatherInfo.getCity().getName());
-            for (WeatherInfo.ListBean bean : list) {
-                Log.d(LOG_TAG, "Max is " + bean.getTemp().getMax());
+            // 拼接字符串， // For now, using the format "Day - description - hi/low"
+            for(WeatherInfo.ListBean listBean : list){
+                // 日期
+                String day;
+                // 天气描述
+                String description;
+                // 最高温与最低温拼接字符
+                String highAndLow;
+
+                List<WeatherInfo.ListBean.WeatherBean> weatherBeanList = listBean.getWeather();
+                Log.d(LOG_TAG , "dt :" + listBean.getDt() );
+                Log.d(LOG_TAG , "description " + weatherBeanList.get(0).getDescription() );
+                Log.d(LOG_TAG , "max :" + listBean.getTemp().getMax() );
+                Log.d(LOG_TAG , "min :" + listBean.getTemp().getMin() );
+
+                //create a Gregorian Calendar, which is in current date
+                GregorianCalendar gc = new GregorianCalendar();
+                //add i dates to current date of calendar
+//                gc.add(GregorianCalendar.DATE, i);
+                //get that date, format it, and "save" it on variable day
+                Date time = gc.getTime();
+                SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
+                day = shortenedDateFormat.format(time);
+
+
             }
-            return null;
+
+            return resultsStrs;
         }
 
         /*  String... params 相当于 String[] params 传了个 String 类型数组进去
