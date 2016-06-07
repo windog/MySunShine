@@ -131,33 +131,46 @@ public class ForecastFragment extends Fragment {
             // Gson解析
             Gson gson = new Gson();
             WeatherInfo weatherInfo = gson.fromJson(forecastJsonStr, WeatherInfo.class);
-            List<WeatherInfo.ListBean> list = weatherInfo.getList();
 
-            // 拼接字符串， // For now, using the format "Day - description - hi/low"
-            for(WeatherInfo.ListBean listBean : list){
+
+            // For now, using the format "Day - description - hi/low"
+            for(int i=0; i< 7;i++){
                 // 日期
                 String day;
                 // 天气描述
                 String description;
-                // 最高温与最低温拼接字符
+                // 最高温与最低温拼接成的字符，like high/low
                 String highAndLow;
 
+                List<WeatherInfo.ListBean> list = weatherInfo.getList();
+                WeatherInfo.ListBean listBean = list.get(i);
                 List<WeatherInfo.ListBean.WeatherBean> weatherBeanList = listBean.getWeather();
+
+                // parse out the excepted data
+                // dayTime : Unix timestamp is a long
+                int dayTime = listBean.getDt();
+                description = weatherBeanList.get(0).getDescription();
+                double max = listBean.getTemp().getMax();
+                double min = listBean.getTemp().getMin();
+
+                // for debugging if my data are right
                 Log.d(LOG_TAG , "dt :" + listBean.getDt() );
                 Log.d(LOG_TAG , "description " + weatherBeanList.get(0).getDescription() );
                 Log.d(LOG_TAG , "max :" + listBean.getTemp().getMax() );
                 Log.d(LOG_TAG , "min :" + listBean.getTemp().getMin() );
 
+                // 日期格式转换
                 //create a Gregorian Calendar, which is in current date
                 GregorianCalendar gc = new GregorianCalendar();
                 //add i dates to current date of calendar
-//                gc.add(GregorianCalendar.DATE, i);
+                gc.add(GregorianCalendar.DATE, i);
                 //get that date, format it, and "save" it on variable day
                 Date time = gc.getTime();
                 SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
                 day = shortenedDateFormat.format(time);
+                Log.d(LOG_TAG,"day :" + day);
 
-
+                // TODO Hign and low
             }
 
             return resultsStrs;
