@@ -171,12 +171,18 @@ public class ForecastFragment extends Fragment {
                 Log.d(LOG_TAG,"day :" + day);
 
                 // TODO Hign and low
+                highAndLow = formatHighLows(max,min);
+                resultsStrs[i] = day + " - " + description + " - " + highAndLow;
             }
 
+            for(String s : resultsStrs){
+                Log.d(LOG_TAG, "foreccast result: " + s);
+            }
             return resultsStrs;
         }
 
         /*  String... params 相当于 String[] params 传了个 String 类型数组进去
+            此方法是另开线程执行的
         * */
         @Override
         protected String[] doInBackground(String... params) {
@@ -272,5 +278,20 @@ public class ForecastFragment extends Fragment {
             // This will only happen if there was an error getting or parsing the forecast.
             return null;
         }
+
+        /* 此方法已回到主线程，接收的是 doInBackground() 的返回值
+        * */
+        @Override
+        protected void onPostExecute(String[] result) {
+            if (result != null) {
+                mForecastAdapter.clear();
+                for(String dayForecastStr : result) {
+                    mForecastAdapter.add(dayForecastStr);
+                }
+                // New data is back from the server.  Hooray!
+            }
+        }
     }
+
+
 }
