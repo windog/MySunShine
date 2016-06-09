@@ -285,9 +285,11 @@ public class ForecastFragment extends Fragment {
         protected void onPostExecute(String[] result) {
             if (result != null) {
                 mForecastAdapter.clear();
-                for(String dayForecastStr : result) {
-                    mForecastAdapter.add(dayForecastStr);
-                }
+                mForecastAdapter.addAll(result);
+                // 下面这个写法与 addAll 相同
+//                for(String dayForecastStr : result) {
+//                    mForecastAdapter.add(dayForecastStr);
+//                }
                 // New data is back from the server.  Hooray!
             }
         }
