@@ -154,10 +154,10 @@ public class ForecastFragment extends Fragment {
                 double min = listBean.getTemp().getMin();
 
                 // for debugging if my data are right
-                Log.d(LOG_TAG , "dt :" + listBean.getDt() );
-                Log.d(LOG_TAG , "description " + weatherBeanList.get(0).getDescription() );
-                Log.d(LOG_TAG , "max :" + listBean.getTemp().getMax() );
-                Log.d(LOG_TAG , "min :" + listBean.getTemp().getMin() );
+//                Log.d(LOG_TAG , "dt :" + listBean.getDt() );
+//                Log.d(LOG_TAG , "description " + weatherBeanList.get(0).getDescription() );
+//                Log.d(LOG_TAG , "max :" + listBean.getTemp().getMax() );
+//                Log.d(LOG_TAG , "min :" + listBean.getTemp().getMin() );
 
                 // 日期格式转换
                 //create a Gregorian Calendar, which is in current date
@@ -168,7 +168,7 @@ public class ForecastFragment extends Fragment {
                 Date time = gc.getTime();
                 SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
                 day = shortenedDateFormat.format(time);
-                Log.d(LOG_TAG,"day :" + day);
+//                Log.d(LOG_TAG,"day :" + day);
 
                 // TODO Hign and low
                 highAndLow = formatHighLows(max,min);
@@ -218,7 +218,7 @@ public class ForecastFragment extends Fragment {
 
                 URL url = new URL(builtUri.toString());
                 // print integrated URL
-                Log.d(LOG_TAG, "Built URI is :" + builtUri.toString());
+//                Log.d(LOG_TAG, "Built URI is :" + builtUri.toString());
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -247,7 +247,7 @@ public class ForecastFragment extends Fragment {
                     return null;
                 }
                 forecastJsonStr = buffer.toString();
-                Log.d(LOG_TAG, "Returned string from OPEN_WEATHER: " + forecastJsonStr);
+//                Log.d(LOG_TAG, "Returned string from OPEN_WEATHER: " + forecastJsonStr);
 
 
             } catch (IOException e) {
