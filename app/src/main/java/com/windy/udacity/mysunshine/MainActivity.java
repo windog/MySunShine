@@ -69,6 +69,7 @@ public class MainActivity extends ActionBarActivity  {
                 .appendQueryParameter("q", location)
                 .build();
 
+        // Intent.ACTION_VIEW 系统内置意图，根据 URI 的不同可以调用浏览器和地图，以及播放文件等等
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(geoLocation);
 
