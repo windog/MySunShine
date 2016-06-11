@@ -1,9 +1,11 @@
 package com.windy.udacity.mysunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,7 +72,7 @@ public class ForecastFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
             // call AsyncTask
-            new FetchWeatherTask().execute("beijing");
+            updateWeather();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -121,6 +123,23 @@ public class ForecastFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    /* 刷新的操作封装为一个方法
+    * */
+    private void updateWeather() {
+        FetchWeatherTask weatherTask = new FetchWeatherTask();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = prefs.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+        weatherTask.execute(location);
+    }
+
+    /* onStart() 直接调用刷新方法，启动应用会自动刷新
+    * */
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
     }
 
 
