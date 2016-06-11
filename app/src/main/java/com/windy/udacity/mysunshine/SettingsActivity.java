@@ -1,6 +1,5 @@
 package com.windy.udacity.mysunshine;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.preference.ListPreference;
@@ -8,52 +7,42 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 /**
  * Created by windog on 2016/6/10.
  */
 public class SettingsActivity extends AppCompatActivity {
+
+    private final String LOG_TAG = "SettingActivity";
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         setContentView(R.layout.activity_setting);
 
-        final SettingFragment settingFragment = new SettingFragment();
-
         if (savedInstanceState == null) {
             // getFragmentManager() 和 getSupportFragmentManager()的区别
             getFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.setting_container, settingFragment)
+                    .replace(R.id.setting_container, new SettingFragment())
+                    .commit();
 
             // TODO,SettingFragment blank
                     // http://stackoverflow.com/questions/35933440/android-preferencefragment-loaded-with-no-errors-but-screen-is-blank
-            /*Adding to the backStack here and then setting a backStack Listener
-            *on the next step made it add the fragment then immediately take it
-            *off, giving my empty activity layout.*/
 
-                    .addToBackStack(null)
-                    .commit();
-            getFragmentManager().addOnBackStackChangedListener(
-                    new FragmentManager.OnBackStackChangedListener() {
-                        @Override
-                        public void onBackStackChanged() {
-                            getFragmentManager()
-                                    .beginTransaction()
-                                    .remove(settingFragment)
-                                    .commit();
-                        }
-                    });
         }
     }
 
 
     public static class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener{
 
+        private final String LOG_TAG = "SettingFragment";
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            Log.d(LOG_TAG,"Hello");
             addPreferencesFromResource(R.xml.pref_general);
+            Log.d(LOG_TAG,"Hello12");
 
             // For all preferences, attach an OnPreferenceChangeListener so the UI summary can be
             // updated when the preference changes.
