@@ -105,8 +105,8 @@ public class ForecastFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String forecast = mForecastAdapter.getItem(position);
 
-                Intent intent = new Intent(getActivity(),DetailActivity.class);
-                intent.putExtra(intent.EXTRA_TEXT,forecast);
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra(intent.EXTRA_TEXT, forecast);
                 startActivity(intent);
             }
         });
@@ -155,7 +155,7 @@ public class ForecastFragment extends Fragment {
 
 
             // For now, using the format "Day - description - hi/low"
-            for(int i=0; i< 7;i++){
+            for (int i = 0; i < 7; i++) {
                 // 日期
                 String day;
                 // 天气描述
@@ -192,11 +192,11 @@ public class ForecastFragment extends Fragment {
 //                Log.d(LOG_TAG,"day :" + day);
 
                 // TODO Hign and low
-                highAndLow = formatHighLows(max,min);
+                highAndLow = formatHighLows(max, min);
                 resultsStrs[i] = day + " - " + description + " - " + highAndLow;
             }
 
-            for(String s : resultsStrs){
+            for (String s : resultsStrs) {
                 Log.d(LOG_TAG, "foreccast result: " + s);
             }
             return resultsStrs;

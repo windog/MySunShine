@@ -9,9 +9,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 // ActionBarActivity has been deprecated , AppCompatActivity instead
-public class MainActivity extends ActionBarActivity  {
+public class MainActivity extends ActionBarActivity {
 
     private final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -44,7 +45,7 @@ public class MainActivity extends ActionBarActivity  {
 
         switch (id) {
             case R.id.action_settings:
-                startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 return true;
             case R.id.action_map:
                 openPreferredLocationInMap();
@@ -77,6 +78,7 @@ public class MainActivity extends ActionBarActivity  {
             startActivity(intent);
         } else {
             Log.d(LOG_TAG, "Couldn't call " + location + ", no receiving apps installed!");
+            Toast.makeText(this, "no receiving apps installed!", Toast.LENGTH_SHORT).show();
         }
     }
 }

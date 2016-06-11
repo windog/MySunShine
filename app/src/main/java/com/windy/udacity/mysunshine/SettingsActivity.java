@@ -15,6 +15,7 @@ import android.util.Log;
 public class SettingsActivity extends AppCompatActivity {
 
     private final String LOG_TAG = "SettingActivity";
+
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
@@ -28,21 +29,22 @@ public class SettingsActivity extends AppCompatActivity {
                     .commit();
 
             // TODO,SettingFragment blank
-                    // http://stackoverflow.com/questions/35933440/android-preferencefragment-loaded-with-no-errors-but-screen-is-blank
+            // http://stackoverflow.com/questions/35933440/android-preferencefragment-loaded-with-no-errors-but-screen-is-blank
 
         }
     }
 
 
-    public static class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener{
+    public static class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
         private final String LOG_TAG = "SettingFragment";
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            Log.d(LOG_TAG,"Hello");
+            Log.d(LOG_TAG, "Hello");
             addPreferencesFromResource(R.xml.pref_general);
-            Log.d(LOG_TAG,"Hello12");
+            Log.d(LOG_TAG, "Hello12");
 
             // For all preferences, attach an OnPreferenceChangeListener so the UI summary can be
             // updated when the preference changes.

@@ -3,9 +3,13 @@ package com.windy.udacity.mysunshine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +23,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new PlaceholderFragment())
+                    .replace(R.id.container, new DetailFragment())
                     .commit();
         }
     }
@@ -41,7 +45,7 @@ public class DetailActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this,SettingsActivity.class));
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
@@ -51,9 +55,14 @@ public class DetailActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class DetailFragment extends Fragment {
 
-        public PlaceholderFragment() {
+        private static final String LOG_TAG = DetailFragment.class.getSimpleName();
+        private static final String FORCAST_SHARE_HASHTAG = "#MySunShine";
+        private String mForecastStr;
+
+        public DetailFragment() {
+            setHasOptionsMenu(true);
         }
 
         @Override
@@ -65,12 +74,40 @@ public class DetailActivity extends AppCompatActivity {
             // The detail Activity called via intent.  Inspect the intent for forecast data.
             Intent intent = getActivity().getIntent();
             if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-                String data = intent.getStringExtra(Intent.EXTRA_TEXT);
+                mForecastStr = intent.getStringExtra(Intent.EXTRA_TEXT);
                 TextView tv = (TextView) rootView.findViewById(R.id.detail_text);
-                tv.setText(data);
+                tv.setText(mForecastStr);
             }
 
             return rootView;
+        }
+
+        /* Share MenuItem
+        * */
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            inflater.inflate(R.menu.detailfragment, menu);
+            MenuItem menuItem = menu.findItem(R.id.action_share);
+            // 得到的 mShareActionProvider 为空，因为 detailfragment.xml 中的 actionProviderClass 必须要用 v7 包，nameSpace也得改成 myapp
+            ShareActionProvider mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+
+            if (mShareActionProvider != null) {
+                mShareActionProvider.setShareIntent(createShareForecastIntent());
+            } else {
+                Log.d(LOG_TAG, "ShareActionProvider is null?");
+            }
+
+        }
+
+        /* ShareIntent
+        * */
+        private Intent createShareForecastIntent() {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, mForecastStr + FORCAST_SHARE_HASHTAG);
+            return intent;
         }
     }
 }
