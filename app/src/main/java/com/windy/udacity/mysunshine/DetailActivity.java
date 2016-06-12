@@ -58,7 +58,7 @@ public class DetailActivity extends AppCompatActivity {
     public static class DetailFragment extends Fragment {
 
         private static final String LOG_TAG = DetailFragment.class.getSimpleName();
-        private static final String FORCAST_SHARE_HASHTAG = "#MySunShine";
+        private static final String FORCAST_SHARE_HASHTAG = " #MySunShine";
         private String mForecastStr;
 
         public DetailFragment() {
@@ -103,8 +103,8 @@ public class DetailActivity extends AppCompatActivity {
         * */
         private Intent createShareForecastIntent() {
             Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_TEXT, mForecastStr + FORCAST_SHARE_HASHTAG);
             return intent;
