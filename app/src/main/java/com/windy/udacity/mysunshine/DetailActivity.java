@@ -58,7 +58,7 @@ public class DetailActivity extends AppCompatActivity {
     public static class DetailFragment extends Fragment {
 
         private static final String LOG_TAG = DetailFragment.class.getSimpleName();
-        private static final String FORCAST_SHARE_HASHTAG = " #MySunShine";
+        private static final String FORCAST_SHARE_HASHTAG = " #MySunshine";
         private String mForecastStr;
 
         public DetailFragment() {
