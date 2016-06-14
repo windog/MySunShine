@@ -33,4 +33,6 @@ dependencies {
     //导入官方 volley 库
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.google.code.gson:gson:2.6.2'
+    // 第三方日志工具 logger
+    compile 'com.orhanobut:logger:1.3'
 }

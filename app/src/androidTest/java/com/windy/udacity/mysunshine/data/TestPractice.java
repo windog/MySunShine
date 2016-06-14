@@ -18,7 +18,9 @@ public class TestPractice extends AndroidTestCase {
         int d = 10;
 
         assertEquals("X should be equal", a, c);
+        // assertTrue(String , condition); condition的期望值应该是 true ，符合、则测试通过，不符合、则显示String
         assertTrue("Y should be true", d > a);
+        // assertFalse(String , condition); condition的期望值应该是 false ，符合、则测试通过，不符合、则显示String
         assertFalse("Z should be false", a == b);
 
         if (b > d) {
