@@ -191,7 +191,7 @@ public class ForecastFragment extends Fragment {
                 day = shortenedDateFormat.format(time);
 //                Log.d(LOG_TAG,"day :" + day);
 
-                // TODO Hign and low
+
                 highAndLow = formatHighLows(max, min);
                 resultsStrs[i] = day + " - " + description + " - " + highAndLow;
             }

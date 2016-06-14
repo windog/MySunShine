@@ -87,6 +87,7 @@ public class TestUtilities extends AndroidTestCase {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues testValues = TestUtilities.createNorthPoleLocationValues();
 
+        // 插入成功则返回行号，失败则返回 -1
         long locationRowId;
         locationRowId = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, testValues);
 
