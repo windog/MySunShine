@@ -40,7 +40,12 @@
         </activity>
 
         <!--BroadCast-->
+
         <!--Content Providers-->
+        <provider
+            android:authorities="com.windy.udacity.mysunshine"
+            android:name=".data.WeatherProvider" />
+
         <!--Services-->
     </application>
 
