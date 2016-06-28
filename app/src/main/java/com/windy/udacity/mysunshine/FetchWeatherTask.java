@@ -288,7 +288,10 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
                     .appendQueryParameter(APPID_PARAM, BuildConfig.OPEN_WEATHER_MAP_API_KEY)
                     .build();
 
+
             URL url = new URL(builtUri.toString());
+            // 打印请求链接，测试是否有效
+            Log.d(LOG_TAG, "url = " + url);
 
             // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
