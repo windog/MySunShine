@@ -43,6 +43,7 @@ public class Utility {
     static String formatTemperature(double temperature, boolean isMetric) {
         double temp;
         if ( !isMetric ) {
+            // 华氏度 = 摄氏度 × 1.8 + 32
             temp = 9*temperature/5+32;
         } else {
             temp = temperature;
