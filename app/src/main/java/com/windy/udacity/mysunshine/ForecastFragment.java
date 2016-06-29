@@ -147,7 +147,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
         return new CursorLoader(getActivity(),
                 weatherForLocationUri,
-                null,
+                FORECAST_COLUMNS,
                 null,
                 null,
                 sortOrder);
