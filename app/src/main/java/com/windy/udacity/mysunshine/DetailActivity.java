@@ -58,7 +58,7 @@ public class DetailActivity extends AppCompatActivity {
     public static class DetailFragment extends Fragment {
 
         private static final String LOG_TAG = DetailFragment.class.getSimpleName();
-        private static final String FORCAST_SHARE_HASHTAG = " #MySunshine ";
+        private static final String FORCAST_SHARE_HASHTAG = " #MySunshineApp ";
         private String mForecastStr;
 
         public DetailFragment() {
@@ -73,11 +73,17 @@ public class DetailActivity extends AppCompatActivity {
 
             // The detail Activity called via intent.  Inspect the intent for forecast data.
             Intent intent = getActivity().getIntent();
-            if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-                mForecastStr = intent.getStringExtra(Intent.EXTRA_TEXT);
-                TextView tv = (TextView) rootView.findViewById(R.id.detail_text);
-                tv.setText(mForecastStr);
+            if (intent != null) {
+                mForecastStr = intent.getDataString();
             }
+
+            if (null != mForecastStr) {
+                ((TextView) rootView.findViewById(R.id.detail_text)).setText(mForecastStr);
+            }
+
+            // print mForecastStr in log
+            //Logger.d(LOG_TAG, "mForecastStr = " + mForecastStr);
+            Log.d(LOG_TAG, "mForecastStr = " + mForecastStr);
 
             return rootView;
         }

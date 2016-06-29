@@ -24,6 +24,7 @@ import android.os.AsyncTask;
 import android.text.format.Time;
 import android.util.Log;
 
+import com.orhanobut.logger.Logger;
 import com.windy.udacity.mysunshine.data.WeatherContract;
 import com.windy.udacity.mysunshine.data.WeatherContract.WeatherEntry;
 
@@ -291,7 +292,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 
             URL url = new URL(builtUri.toString());
             // 打印请求链接，测试是否有效
-            Log.d(LOG_TAG, "url = " + url);
+            Logger.d(LOG_TAG, "url = " + url);
 
             // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
