@@ -42,11 +42,21 @@
         <!--BroadCast-->
 
         <!--Content Providers-->
+        <!-- exported 可使 Content Provider 对第三方可用  -->
         <provider
             android:authorities="com.windy.udacity.mysunshine"
-            android:name=".data.WeatherProvider" />
+            android:name=".data.WeatherProvider"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="com.app.license_to_kill"/>
 
         <!--Services-->
     </application>
+
+    <!-- 这个例子是 Content Provider 的权限控制 -->
+    <permission
+        android:name="com.app.license_to_kill"
+        android:protectionLevel="dangerous"
+        android:label="Licensed to kill"/>
 
 </manifest>
