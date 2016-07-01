@@ -4,6 +4,9 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
+    // 启用 dataBinding
+    dataBinding.enabled = true
+
     defaultConfig {
         applicationId "com.windy.udacity.mysunshine"
         minSdkVersion 16
@@ -35,4 +38,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
     // 第三方日志工具 logger
     compile 'com.orhanobut:logger:1.15'
+    // Material Design
+    compile 'com.android.support:design:23.2.1'
 }
