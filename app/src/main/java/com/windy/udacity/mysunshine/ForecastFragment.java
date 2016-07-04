@@ -1,5 +1,8 @@
 package com.windy.udacity.mysunshine;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -153,10 +156,15 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     /* 刷新的操作封装为一个方法 , 显示 Intent 启动 Service
         * */
     private void updateWeather() {
-        Intent intent = new Intent(getActivity(), SunshineService.class);
-        intent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,Utility.getPreferredLocation(getActivity()));
-        // startService 记住了！！不要写成 startActivity
-        getActivity().startService(intent);
+        Intent alarmIntent = new Intent(getActivity(), SunshineService.AlarmReceiver.class);
+        alarmIntent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,Utility.getPreferredLocation(getActivity()));
+
+        //Wrap in a pending intent which only fires once.  只触发一次
+        PendingIntent pi = PendingIntent.getBroadcast(getActivity(),0,alarmIntent,PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager am =  (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+        //Set the AlarmManager to wake up the system.
+        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 5000, pi);
     }
 
     /* onStart() 直接调用刷新方法，启动应用会自动刷新
