@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.windy.udacity.mysunshine.data.WeatherContract;
+import com.windy.udacity.mysunshine.service.SunshineService;
 
 /**
  * Created by windog on 2016/6/1.
@@ -149,12 +150,13 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
     }
 
-    /* 刷新的操作封装为一个方法
+    /* 刷新的操作封装为一个方法 , 显示 Intent 启动 Service
         * */
     private void updateWeather() {
-        FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
-        String location = Utility.getPreferredLocation(getActivity());
-        weatherTask.execute(location);
+        Intent intent = new Intent(getActivity(), SunshineService.class);
+        intent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,Utility.getPreferredLocation(getActivity()));
+        // startService 记住了！！不要写成 startActivity
+        getActivity().startService(intent);
     }
 
     /* onStart() 直接调用刷新方法，启动应用会自动刷新

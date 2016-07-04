@@ -51,12 +51,13 @@
             android:permission="com.app.license_to_kill"/>
 
         <!--Services-->
+        <service android:name="com.windy.udacity.mysunshine.service.SunshineService"/>
     </application>
 
-    <!-- 这个例子是 Content Provider 的权限控制 -->
+    <!-- 这个例子是 Content Provider 的权限控制
     <permission
         android:name="com.app.license_to_kill"
         android:protectionLevel="dangerous"
         android:label="Licensed to kill"/>
-
+    -->
 </manifest>
