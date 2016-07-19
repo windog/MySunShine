@@ -50,9 +50,9 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
 
         switch (id) {
-            case R.id.action_settings:
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                return true;
+//            case R.id.action_settings:
+//                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+//                return true;
             case R.id.action_map:
                 openPreferredLocationInMap();
                 return true;

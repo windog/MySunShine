@@ -1,10 +1,8 @@
 package com.windy.udacity.mysunshine.service;
 
 import android.app.IntentService;
-import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,7 +10,7 @@ import android.text.format.Time;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
-import com.windy.udacity.mysunshine.BuildConfig;
+import com.windy.udacity.mysunshine.Utility;
 import com.windy.udacity.mysunshine.data.WeatherContract;
 
 import org.json.JSONArray;
@@ -73,11 +71,11 @@ public class SunshineService extends IntentService{
                     .appendQueryParameter(FORMAT_PARAM, format)
                     .appendQueryParameter(UNITS_PARAM, units)
                     .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
-                    .appendQueryParameter(APPID_PARAM, BuildConfig.OPEN_WEATHER_MAP_API_KEY)
+                    .appendQueryParameter(APPID_PARAM, Utility.OPEN_WEATHER_MAP_API_KEY)
                     .build();
 
             URL url = new URL(builtUri.toString());
-
+            Log.d(LOG_TAG, "onHandleIntent: "+url);
             // Create the request to OpenWeatherMap, and open the connection
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
@@ -324,12 +322,12 @@ public class SunshineService extends IntentService{
         return locationId;
     }
 
-    public static class AlarmReceiver extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Intent sendIntent = new Intent(context,SunshineService.class);
-            sendIntent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,intent.getStringExtra(SunshineService.LOCATION_QUERY_EXTRA));
-            context.startService(intent);
-        }
-    }
+//    public static class AlarmReceiver extends BroadcastReceiver{
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            Intent sendIntent = new Intent(context,SunshineService.class);
+//            sendIntent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,intent.getStringExtra(SunshineService.LOCATION_QUERY_EXTRA));
+//            context.startService(intent);
+//        }
+//    }
 }

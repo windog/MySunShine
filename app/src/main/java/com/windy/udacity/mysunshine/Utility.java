@@ -29,6 +29,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Utility {
+
+    public static final String OPEN_WEATHER_MAP_API_KEY = "e70e71a919c1368d416e1a6656251a55";
+
     public static String getPreferredLocation(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getString(context.getString(R.string.pref_location_key),
